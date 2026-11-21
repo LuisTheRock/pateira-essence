@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --night: oklch(12% 0.012 30);
+  --cream: oklch(94% 0.028 85);
+  --gold: oklch(80% 0.11 82);
+  --burgundy-deep: oklch(25% 0.08 18);
+  --muted: oklch(74% 0.035 80);
+  --card: oklch(16% 0.016 25);
+  --line: oklch(80% 0.11 82 / 0.18);
+  --input: oklch(80% 0.11 82 / 0.28);
+}
+
+@theme inline {
+  --color-night: var(--night);
+  --color-cream: var(--cream);
+  --color-gold: var(--gold);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-input: var(--input);
+  --font-sans: var(--font-jost);
+  --font-display: var(--font-cormorant);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: linear-gradient(180deg, oklch(12% 0.012 30), oklch(10% 0.01 30));
+  color: var(--cream);
+  font-family: var(--font-jost), system-ui, sans-serif;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(120deg, oklch(90% 0.07 90), oklch(78% 0.12 80) 45%, oklch(68% 0.12 68));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Motion */
+:root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); }
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+}
+@keyframes settle {
+  from { transform: scale(1.06); }
+}
+
+.hero-img { animation: settle 1800ms var(--ease-out) backwards; }
+.stagger > * { animation: enter 700ms var(--ease-out) backwards; }
+.stagger > :nth-child(2) { animation-delay: 80ms; }
+.stagger > :nth-child(3) { animation-delay: 160ms; }
+.stagger > :nth-child(4) { animation-delay: 240ms; }
+.stagger > :nth-child(5) { animation-delay: 320ms; }
+.stagger > :nth-child(6) { animation-delay: 400ms; }
+.stagger > :nth-child(7) { animation-delay: 480ms; }
+
+/* Scroll reveal: reveal.tsx adds .reveal, then .in when visible */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Interactive feedback */
+.btn { transition: filter 200ms var(--ease-out), transform 160ms var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+input:not([type="checkbox"]) { transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out); }
+input:not([type="checkbox"]):focus { box-shadow: 0 0 0 3px oklch(80% 0.11 82 / 0.15); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Privacy dialog: fade/rise in (exit is instant: shortcut, needs @starting-style/allow-discrete to animate) */
+dialog[open] { animation: enter 250ms var(--ease-out); }
+dialog[open]::backdrop { animation: fade 250ms var(--ease-out); }
+@keyframes fade { from { opacity: 0; } }
+html:has(dialog[open]) { overflow: hidden; }
+.enter-in{animation:enter 400ms var(--ease-out)}
