@@ -23,7 +23,7 @@
   --font-display: var(--font-cormorant);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background-color: var(--night); } /* dark behind the page: iOS shows it when you pull down past the top */
 
 body {
   background: linear-gradient(180deg, oklch(12% 0.012 30), oklch(10% 0.01 30));
